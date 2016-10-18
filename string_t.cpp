@@ -42,7 +42,7 @@ using namespace std;
 		{
 			if(&_str != this)
 			{
-				ReallocIfNeed();//!!!!!!!!!!!
+				ReallocIfNeed(_str.length() + 1);
 				
 				strcpy(m_chars, _str.getString());
 			}
@@ -55,7 +55,7 @@ using namespace std;
 		
 		void String_t::setString(const char* _str)
 		{
-			ReallocIfNeed();//!!!!!!!!!!!
+			ReallocIfNeed(strlen(_str) + 1);
 			strcpy(m_chars, _str); 
 		}
 		
@@ -87,9 +87,14 @@ using namespace std;
 			cout << m_chars;
 		}
 		
-		void String_t::ReallocIfNeed()
+		void String_t::ReallocIfNeed(int _newSize)
 		{
-			//TODO
+			if(_newSize > m_currSize)
+			{
+				delete[] m_chars;
+				m_chars = new char[_newSize + 1];
+				m_currSize = _newSize + 1;
+			}
 		}
 		
 		

@@ -19,7 +19,7 @@ class String_t
 		char* m_chars;
 		int m_currSize;
 		
-		void ReallocIfNeed();
+		void ReallocIfNeed(int _newSize);
 };
 
 #endif //__STRING_T_H__

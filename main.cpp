@@ -72,6 +72,14 @@ UNIT(COMPARE_MORE)
 	ASSERT_THAT(s.compare(s2) == 2);
 END_UNIT 
 
+UNIT(RESIZE)
+	String_t s("a");
+	s.setString("hello");
+	ASSERT_THAT(s.length() == 5);
+END_UNIT 
+
+
+
 TEST_SUITE(String_t test)
 	TEST(Def_CTOR)
 	TEST(CHAR_CTOR)
@@ -83,6 +91,7 @@ TEST_SUITE(String_t test)
 	TEST(COMPARE)
 	TEST(COMPARE_LESS)
 	TEST(COMPARE_MORE)
+	TEST(RESIZE)
 END_SUITE
 
 
