@@ -2,13 +2,12 @@
 #include <string.h>
 #include <iostream>
 
-using namespace std;
-
 #define STR_INITIAL_SIZE 128
 #define STR_EQUAL 0
 #define STR_LESS_THEN_PARAM 1
 #define STR_GREATER_THEN_PARAM 2
 
+using namespace std;
 
 		String_t::String_t()
 		{
@@ -46,6 +45,8 @@ using namespace std;
 				
 				strcpy(m_chars, _str.getString());
 			}
+			
+			return *this;
 		}
 		
 		int String_t::length() const
