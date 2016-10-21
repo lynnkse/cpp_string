@@ -10,13 +10,10 @@
 
 using namespace std;
 
-//FIXME add checks
-
 int String_t::m_numOfStrings = 0;
 
 String_t::String_t()
 {
-	//FIXME CreateString()
 	m_chars = new char[STR_INITIAL_SIZE];
 	m_chars[0] = 0;
 	m_currSize = STR_INITIAL_SIZE;
@@ -36,7 +33,6 @@ String_t::String_t(const String_t& _str)
 {
 	int strLen = _str.length();
 	m_chars = new char[strLen + 1];
-	//FIXME can address private members here since it's the same class
 	strcpy(m_chars, _str.getString());
 	m_currSize = strLen;
 	++m_numOfStrings;
@@ -68,8 +64,11 @@ int String_t::length() const
 
 void String_t::setString(const char* _str)
 {
-	ReallocIfNeed(strlen(_str) + 1);
-	strcpy(m_chars, _str); 
+	if(_str)
+	{	
+		ReallocIfNeed(strlen(_str) + 1);
+		strcpy(m_chars, _str); 
+	}
 }
 
 const char* String_t::getString() const
@@ -81,19 +80,7 @@ int String_t::compare(const String_t& _str) const
 {
 	int res = strcmp(this->m_chars, _str.getString());
 	
-	//FIXME ternary here
-	if(res == 0)
-	{
-		return 0;
-	}
-	else if(res > 0)
-	{
-		return STR_GREATER_THEN_PARAM;
-	}
-	else // if(res < 0)
-	{
-		return STR_LESS_THEN_PARAM;
-	}
+	return res == 0 ? 0 : res > 0 ? STR_GREATER_THEN_PARAM : STR_LESS_THEN_PARAM;
 }
 
 void String_t::print() const
@@ -136,12 +123,15 @@ void String_t::prepend(const String_t& _str)
 
 void String_t::prepend(const char* _str)
 {
-	char* newChars = new char[strlen(m_chars) + strlen(_str) + 1];
+	if(_str)
+	{	
+		char* newChars = new char[strlen(m_chars) + strlen(_str) + 1];
 	
-	strcpy(newChars, _str);
-	strcat(newChars, m_chars);
-	delete[] m_chars;
-	m_chars = newChars;
+		strcpy(newChars, _str);
+		strcat(newChars, m_chars);
+		delete[] m_chars;
+		m_chars = newChars;
+	}
 }
 
 bool String_t::operator>(const String_t& _str) const
@@ -181,7 +171,7 @@ bool String_t::contains(const String_t& _str) const
 
 bool String_t::contains(const char* _str) const
 {
-	return strstr(m_chars, _str) == NULL ? false : true;
+	return !_str ? false : strstr(m_chars, _str) == NULL ? false : true;
 }
 
 char String_t::operator[](int i) const
@@ -205,7 +195,7 @@ ostream& operator<<(ostream& _os, const String_t& _str)
 
 istream& operator>>(istream& _is, String_t& _str)
 {
-	char chars[128];//FIXME
+	char chars[128];
 	
 	_is >> chars;
 	
